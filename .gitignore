@@ -41,3 +41,9 @@ bower.json
 
 #Ignore mac support dir
 .DS_Store
+
+#Ignore files in public/uploads folder
+public/uploads
+
+#Ignore file created by rspec
+spec/examples.txt
