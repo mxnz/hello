@@ -38,3 +38,6 @@ bower.json
 *.swp
 *.swo
 *~
+
+#Ignore mac support dir
+.DS_Store
