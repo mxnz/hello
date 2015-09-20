@@ -1,4 +1,6 @@
-RSpec.feature 'Sign in', type: :feature, focus: true do
+require 'rails_helper'
+
+RSpec.feature 'Sign in', type: :feature do
  
   scenario 'User sign in' do
     sign_in(create(:user))

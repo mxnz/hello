@@ -5,4 +5,8 @@ module FeaturesMacros
     fill_in 'Password', with: user.password
     click_on 'Log in'
   end
+
+  def log_out
+    click_on 'Log out'
+  end
 end
