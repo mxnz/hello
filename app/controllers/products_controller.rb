@@ -1,5 +1,9 @@
 class ProductsController < ApplicationController
-  before_action :load_product, only: :show
+  before_action :load_product, only: [:show, :edit, :update, :destroy]
+
+  def index
+    respond_with(@products = Product.all)
+  end
 
   def new
     respond_with(@product = Product.new)
@@ -13,6 +17,19 @@ class ProductsController < ApplicationController
     respond_with(@product)
   end
 
+  def edit
+    respond_with(@product)
+  end
+
+  def update
+    @product.update(product_params)
+    respond_with(@product)
+  end
+
+  def destroy
+    respond_with(@product.destroy!)
+  end
+
 
   private
 
@@ -21,6 +38,6 @@ class ProductsController < ApplicationController
     end
 
     def product_params
-      params.require(:product).permit(:name, :description, :photo)
+      params.require(:product).permit(:name, :description, :photo, :remove_photo)
     end
 end

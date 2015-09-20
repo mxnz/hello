@@ -9,4 +9,8 @@
   = f.label :photo
   = f.file_field :photo
 
+  - if @product.photo.file.present?
+    = f.label :remove_photo
+    = f.check_box :remove_photo
+
   = f.submit 'Save'
