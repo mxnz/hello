@@ -27,5 +27,4 @@ RSpec.feature 'Sign up' do
     expect(page).to have_content("Password can't be blank")
     expect(current_path).to eq user_registration_path
   end
-
 end
