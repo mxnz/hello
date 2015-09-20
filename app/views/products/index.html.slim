@@ -1,0 +1,8 @@
+h1 Products
+
+ul
+  - @products.each do |product|
+    li
+      = link_to product_path(product) do
+        h2 = product.name
+        = image_tag(product.photo.url, alt: "#{product.name} photo")
