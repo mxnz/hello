@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Admin do
-  it_behaves_like 'a user'
+  it_behaves_like 'a user' do
+    let(:user) { build(:admin) }
+  end
 
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:last_name) }
