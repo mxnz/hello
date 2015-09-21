@@ -1,8 +1,9 @@
 h1 = @product.name
-div
+p
   = image_tag(@product.photo.url, alt: 'Product photo')
   = @product.description
 - if user_signed_in?
   div
-    = link_to 'Edit product', edit_product_path(@product)
-    = link_to 'Remove product', product_path(@product), method: :delete
+    = link_to 'Edit product', edit_product_path(@product), class: 'btn btn-primary'
+    | &nbsp
+    = link_to 'Remove product', product_path(@product), method: :delete, class: 'btn btn-danger'
