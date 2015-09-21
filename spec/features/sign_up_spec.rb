@@ -22,7 +22,6 @@ RSpec.feature 'Sign up' do
     click_on 'Sign up'
     click_on 'Sign up'
 
-    expect(page).to have_content("Name can't be blank")
     expect(page).to have_content("Email can't be blank")
     expect(page).to have_content("Password can't be blank")
     expect(current_path).to eq user_registration_path
