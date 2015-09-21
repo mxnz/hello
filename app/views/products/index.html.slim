@@ -1,8 +1,8 @@
 h1 Products
 
-ul
+div class="list-group"
   - @products.each do |product|
-    li
-      = link_to product_path(product) do
-        h2 = product.name
-        = image_tag(product.photo.url, alt: "#{product.name} photo")
+    = link_to product_path(product), class: 'list-group-item' do
+      = image_tag(product.photo.url, alt: "#{product.name} photo")
+      = product.name
+= link_to('Add new product', new_product_path) if signed_in?
