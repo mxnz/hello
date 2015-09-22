@@ -19,7 +19,7 @@ FactoryGirl.define do
 
   factory :admin do
     sequence(:email) { |n| "admin##{n}@test.com" }
-    sequence(:password) { |n| "password#{n}" }
+    sequence(:password) { |n| "long-password#{n}" }
     avatar { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'rails.png')) }
     sequence(:name) { |n| "admin##{n}" }
     sequence(:last_name) { |n| "nimda##{n}" }
