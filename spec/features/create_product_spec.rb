@@ -2,7 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Create product', type: :feature do
   given(:product) { Product.last }
-  before { sign_in(create(:user)) }
+  given(:owner) { create(:owner) }
+  before { sign_in(owner) }
 
   scenario 'An authenticated user adds a new product with valid data' do
     visit new_product_path

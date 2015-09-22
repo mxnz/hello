@@ -3,5 +3,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "Product ##{n}" }
     sequence(:description) { |n| "Product description ##{n}" }
     photo { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec', 'support', 'rails.png')) }
+    pro false
+    store 'store#1'
   end
 end
