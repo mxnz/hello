@@ -5,5 +5,5 @@ RSpec.describe Guest, type: :model do
     let(:user) { build(:guest) }
   end
 
-  it { should validate_length_of(:password).is_at_least(8) }
+  it { should validate_length_of(:password).is_at_least(6) }
 end
