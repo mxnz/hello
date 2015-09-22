@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   protected
 
     def configure_permitted_parameters
-      devise_parameter_sanitizer.for(:sign_up) << :name
+      (devise_parameter_sanitizer.for(:sign_up) <<
+        [:name, :last_name, :avatar, :passport_photo, :birthdate, :store]).flatten
     end
 end
