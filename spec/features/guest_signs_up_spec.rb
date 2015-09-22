@@ -1,15 +1,14 @@
 require 'rails_helper'
 
-RSpec.feature 'Sign up' do
-  given(:user) { build(:user) } 
+RSpec.feature 'Guest signs up' do
+  given(:guest) { build(:guest) } 
 
   scenario 'Guest signs up with valid credentials' do
     visit root_path
-    click_on 'Sign up'
-    fill_in 'Name', with: user.name
-    fill_in 'Email', with: user.email
-    fill_in 'Password', with: user.password
-    fill_in 'Password confirmation', with: user.password
+    click_on 'as a guest'
+    fill_in 'Email', with: guest.email
+    fill_in 'Password', with: guest.password
+    fill_in 'Password confirmation', with: guest.password
     click_on 'Sign up'
 
     expect(page).to have_content('Welcome! You have signed up successfully.')
@@ -19,11 +18,11 @@ RSpec.feature 'Sign up' do
 
   scenario 'Guest signs up with invalid credentials' do
     visit root_path
-    click_on 'Sign up'
+    click_on 'as a guest'
     click_on 'Sign up'
 
     expect(page).to have_content("Email can't be blank")
     expect(page).to have_content("Password can't be blank")
-    expect(current_path).to eq user_registration_path
+    expect(current_path).to eq guest_registration_path
   end
 end

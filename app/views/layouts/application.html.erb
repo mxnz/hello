@@ -26,8 +26,18 @@
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <% if !signed_in? && !current_page?(new_user_registration_path) %>
-            <li> <%= link_to('Sign up', new_user_registration_path) %> </li>
+          <% if !signed_in? && !current_page_is_new_registration_one? %>
+            <li class="dropdown">
+                <a class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  Sign up
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li> <%= link_to 'as a guest', new_guest_registration_path %> </li>
+                  <li> <%= link_to 'as a store owner', new_owner_registration_path %> </li>
+                  <li> <%= link_to 'as an admin', new_admin_registration_path %> </li>
+                </ul>
+            </li>
           <% end %>
 
           <% if !signed_in? && !current_page?(new_user_session_path) %>
