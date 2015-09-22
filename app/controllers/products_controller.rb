@@ -11,7 +11,7 @@ class ProductsController < ApplicationController
   end
 
   def create
-    respond_with(@product = Product.create(product_params))
+    respond_with(@product = Product.create(product_params.merge(store: current_user.store)))
   end
 
   def show
