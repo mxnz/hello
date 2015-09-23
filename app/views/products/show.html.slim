@@ -7,3 +7,9 @@ p
     = link_to 'Edit product', edit_product_path(@product), class: 'btn btn-primary'
     | &nbsp
     = link_to 'Remove product', product_path(@product), method: :delete, class: 'btn btn-danger'
+- if policy(@product).update_pro_attr?
+  div 
+    - if @product.pro?
+      = link_to 'cancel PRO status', update_pro_attr_product_path(@product), method: :patch, class: 'btn btn-primary' 
+    - else
+      = link_to 'set PRO status', update_pro_attr_product_path(@product), method: :patch, class: 'btn btn-primary' 

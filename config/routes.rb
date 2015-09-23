@@ -61,5 +61,9 @@ Rails.application.routes.draw do
 
   root to: 'products#index'
 
-  resources :products
+  resources :products do
+    member do
+      patch 'update_pro_attr'
+    end
+  end
 end

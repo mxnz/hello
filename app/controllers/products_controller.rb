@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_product, ->() { authorize @product }, only: [:show, :edit, :update, :destroy]
+  before_action :load_product, ->() { authorize @product }, only: [:show, :edit, :update, :destroy, :update_pro_attr]
 
   def index
     @products = policy_scope(Product.all)
@@ -36,6 +36,10 @@ class ProductsController < ApplicationController
     respond_with(@product.destroy!)
   end
 
+  def update_pro_attr
+    @product.update(pro: !@product.pro?)
+    render :show
+  end
 
   private
 
