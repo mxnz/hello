@@ -1,5 +1,5 @@
-class GuestProductPolicy < ApplicationPolicy
-  def show
+class AdminProductPolicy < ApplicationPolicy
+  def show?
     true
   end
 
@@ -8,6 +8,6 @@ class GuestProductPolicy < ApplicationPolicy
   end
 
   def update_pro_attr?
-    false
+    true
   end
 end

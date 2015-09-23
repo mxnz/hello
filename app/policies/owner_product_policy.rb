@@ -1,7 +1,4 @@
 class OwnerProductPolicy < ApplicationPolicy
-  class Scope < Scope
-  end
-
   def show?
     true
   end

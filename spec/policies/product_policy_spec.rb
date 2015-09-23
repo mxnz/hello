@@ -122,4 +122,42 @@ RSpec.describe ProductPolicy do
       it { is_expected.to_not permit(owner, pro_product) }
     end
   end
+
+
+  context 'for admin' do
+    let(:admin) { create(:admin) }
+
+    permissions ".scope" do
+      it 'returns all products' do
+        expect(Pundit.policy_scope(admin, Product).all.count).to eq Product.all.count
+      end
+    end
+
+    permissions :show? do
+      it { is_expected.to permit(admin, product) }
+      it { is_expected.to permit(admin, pro_product) }
+    end
+
+    permissions :create? do
+      it { is_expected.to_not permit(admin, build(:product)) }
+    end
+
+    permissions :update? do
+      it { is_expected.to_not permit(admin, product) }
+    end
+
+    permissions :destroy? do
+      it { is_expected.to_not permit(admin, product) }
+    end
+
+    permissions :show_pro_attr? do
+      it { is_expected.to permit(admin, product) }
+      it { is_expected.to permit(admin, pro_product) }
+    end
+
+    permissions :update_pro_attr? do
+      it { is_expected.to permit(admin, product) }
+      it { is_expected.to permit(admin, pro_product) }
+    end
+  end
 end
