@@ -10,4 +10,8 @@ class GuestProductPolicy < ApplicationPolicy
   def update_pro_attr?
     false
   end
+
+  def show_store_attr?
+    false
+  end
 end

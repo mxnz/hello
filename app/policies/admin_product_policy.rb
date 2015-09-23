@@ -10,4 +10,8 @@ class AdminProductPolicy < ApplicationPolicy
   def update_pro_attr?
     true
   end
+
+  def show_store_attr?
+    true
+  end
 end

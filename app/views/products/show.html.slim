@@ -1,4 +1,7 @@
 h1 = @product.name
+- if policy(@product).show_store_attr?
+  p
+    = "store: #{@product.store}"
 p
   = image_tag(@product.photo.url, alt: 'Product photo')
   = @product.description

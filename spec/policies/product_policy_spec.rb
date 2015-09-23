@@ -43,6 +43,10 @@ RSpec.describe ProductPolicy do
       it { is_expected.to_not permit(nil, product) }
       it { is_expected.to_not permit(nil, product) }
     end
+
+    permissions :show_store_attr? do
+      it { is_expected.to_not permit(nil, product) }
+    end
   end
 
 
@@ -80,6 +84,10 @@ RSpec.describe ProductPolicy do
     permissions :update_pro_attr? do
       it { is_expected.to_not permit(guest, product) }
       it { is_expected.to_not permit(guest, pro_product) }
+    end
+
+    permissions :show_store_attr? do
+      it { is_expected.to_not permit(guest, product) }
     end
   end
 
@@ -121,6 +129,10 @@ RSpec.describe ProductPolicy do
       it { is_expected.to_not permit(owner, product) }
       it { is_expected.to_not permit(owner, pro_product) }
     end
+
+    permissions :show_store_attr? do
+      it { is_expected.to permit(owner, product) }
+    end
   end
 
 
@@ -158,6 +170,10 @@ RSpec.describe ProductPolicy do
     permissions :update_pro_attr? do
       it { is_expected.to permit(admin, product) }
       it { is_expected.to permit(admin, pro_product) }
+    end
+
+    permissions :show_store_attr? do
+      it { is_expected.to permit(admin, product) }
     end
   end
 end
