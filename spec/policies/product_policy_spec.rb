@@ -5,6 +5,7 @@ RSpec.describe ProductPolicy do
   let!(:product) { create(:product, pro: false) }
   let!(:pro_product) { create(:product, pro: true) }
 
+
   context 'for unknown user' do
     permissions ".scope" do
       it 'returns products' do
@@ -44,9 +45,9 @@ RSpec.describe ProductPolicy do
     end
   end
 
+
   context 'for guest' do
     let(:guest) { create(:guest) }
-
 
     permissions ".scope" do
       it 'returns all products' do
@@ -79,6 +80,46 @@ RSpec.describe ProductPolicy do
     permissions :update_pro_attr? do
       it { is_expected.to_not permit(guest, product) }
       it { is_expected.to_not permit(guest, pro_product) }
+    end
+  end
+
+
+  context 'for store owner' do
+    let(:owner) { create(:owner) }
+
+    permissions ".scope" do
+      it 'returns all products' do
+        expect(Pundit.policy_scope(owner, Product).all.count).to eq Product.all.count
+      end
+    end
+
+    permissions :show? do
+      it { is_expected.to permit(owner, product) }
+      it { is_expected.to permit(owner, pro_product) }
+    end
+
+    permissions :create? do
+      it { is_expected.to permit(owner, build(:product)) }
+    end
+
+    permissions :update? do
+      it { is_expected.to permit(owner, product) }
+      it { is_expected.to permit(owner, pro_product) }
+    end
+
+    permissions :destroy? do
+      it { is_expected.to permit(owner, product) }
+      it { is_expected.to permit(owner, pro_product) }
+    end
+
+    permissions :show_pro_attr? do
+      it { is_expected.to permit(owner, product) }
+      it { is_expected.to permit(owner, pro_product) }
+    end
+
+    permissions :update_pro_attr? do
+      it { is_expected.to_not permit(owner, product) }
+      it { is_expected.to_not permit(owner, pro_product) }
     end
   end
 end
