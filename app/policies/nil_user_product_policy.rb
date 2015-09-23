@@ -5,10 +5,6 @@ class NilUserProductPolicy < ApplicationPolicy
     end
   end
 
-  def index?
-    true
-  end
-
   def show?
     !record.pro?
   end

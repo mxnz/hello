@@ -2,16 +2,11 @@ require 'rails_helper'
 
 RSpec.describe ProductPolicy do
   subject { described_class }
-  let(:product) { create(:product, pro: false) }
-  let(:pro_product) { create(:product, pro: true) }
+  let!(:product) { create(:product, pro: false) }
+  let!(:pro_product) { create(:product, pro: true) }
 
   context 'for unknown user' do
     permissions ".scope" do
-      before do
-        product 
-        pro_product
-      end
-
       it 'returns products' do
         expect(Pundit.policy_scope(nil, Product).all).to include(product)
       end
@@ -49,29 +44,41 @@ RSpec.describe ProductPolicy do
     end
   end
 
-  context 'for guest', skip: true do
-
+  context 'for guest' do
     let(:guest) { create(:guest) }
 
 
     permissions ".scope" do
-      pending "add some examples to (or delete) #{__FILE__}"
+      it 'returns all products' do
+        expect(Pundit.policy_scope(guest, Product).all.count).to eq Product.all.count
+      end
     end
 
     permissions :show? do
-      pending "add some examples to (or delete) #{__FILE__}"
+      it { is_expected.to permit(guest, product) }
+      it { is_expected.to permit(guest, pro_product) }
     end
 
     permissions :create? do
-      pending "add some examples to (or delete) #{__FILE__}"
+      it { is_expected.to_not permit(guest, build(:product)) }
     end
 
     permissions :update? do
-      pending "add some examples to (or delete) #{__FILE__}"
+      it { is_expected.to_not permit(guest, product) }
     end
 
     permissions :destroy? do
-      pending "add some examples to (or delete) #{__FILE__}"
+      it { is_expected.to_not permit(guest, product) }
+    end
+
+    permissions :show_pro_attr? do
+      it { is_expected.to permit(guest, product) }
+      it { is_expected.to permit(guest, pro_product) }
+    end
+
+    permissions :update_pro_attr? do
+      it { is_expected.to_not permit(guest, product) }
+      it { is_expected.to_not permit(guest, pro_product) }
     end
   end
 end
