@@ -5,6 +5,7 @@ RSpec.feature 'Edit product', type: :feature do
   given(:product) { create(:product) }
   given(:owner) { create(:owner) }
   given(:guest) { create(:guest) }
+  given(:admin) { create(:admin) }
 
   it_behaves_like 'a page required authentication' do
     let(:path_to_page) { edit_product_path(product) } 
@@ -108,6 +109,33 @@ RSpec.feature 'Edit product', type: :feature do
 
   scenario 'Guest cannot visit edit product page' do
     sign_in guest
+    expect { visit edit_product_path(product) }.to raise_error Pundit::NotAuthorizedError
+  end
+
+
+  scenario 'Admin cannot remove product' do
+    sign_in admin
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+  scenario 'Admin cannot visit edit product page from show product page' do
+    sign_in admin
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Edit product')
+  end
+
+  scenario 'Admin cannot remove product from show product page' do
+    sign_in admin
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+  scenario 'Admin cannot visit edit product page' do
+    sign_in admin
     expect { visit edit_product_path(product) }.to raise_error Pundit::NotAuthorizedError
   end
 end

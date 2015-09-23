@@ -14,8 +14,8 @@ class ProductsController < ApplicationController
   end
 
   def create
+    authorize Product
     @product = Product.create(product_params.merge(store: current_user.store))
-    authorize @product
     respond_with(@product)
   end
 

@@ -4,6 +4,7 @@ RSpec.feature 'Create product', type: :feature do
   given(:product) { Product.last }
   given(:guest) { create(:guest) }
   given(:owner) { create(:owner) }
+  given(:admin) { create(:admin) }
 
   it_behaves_like 'a page required authentication' do
     let(:path_to_page) { new_product_path }
@@ -37,11 +38,13 @@ RSpec.feature 'Create product', type: :feature do
     expect(page).to have_button 'Save'
   end
 
+
   scenario 'Unauthorized user cannot view "Add new product" link on product index page' do
     visit products_path
 
     expect(page).to_not have_selector(:link_or_button, 'Add new product')
   end
+
 
   scenario 'A guest cannot view "Add new product" link on product index page' do
     sign_in guest
@@ -52,6 +55,19 @@ RSpec.feature 'Create product', type: :feature do
 
   scenario 'A guest cannot add a new product' do
     sign_in guest
+    expect { visit new_product_path }.to raise_error Pundit::NotAuthorizedError
+  end
+
+
+  scenario 'An admin cannot view "Add new product" link on product index page' do
+    sign_in admin
+    visit products_path
+    
+    expect(page).to_not have_selector(:link_or_button, 'Add new product')
+  end
+
+  scenario 'An admin cannot add a new product' do
+    sign_in admin
     expect { visit new_product_path }.to raise_error Pundit::NotAuthorizedError
   end
 end

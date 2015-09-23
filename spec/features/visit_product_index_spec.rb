@@ -18,20 +18,15 @@ RSpec.feature 'Visit product index' do
     expect(page).to_not have_content pro_product.name
   end
 
-  scenario 'Guest visits product index page and sees all products' do
-    sign_in(create(:guest))
-    visit products_path
+  it_behaves_like 'a user who can view all products' do
+    let(:user) { create(:guest) }
+  end
 
-    expect(page).to have_selector('h1', text: 'Products')
+  it_behaves_like 'a user who can view all products' do
+    let(:user) { create(:owner) }
+  end
 
-    products.each do |product|
-      expect(page).to have_content product.name
-      expect(page).to have_css("img[src=\"#{product.photo.url}\"]")
-      expect(page).to have_css("a[href=\"#{product_path(product)}\"]")
-    end
-
-    expect(page).to have_content pro_product.name
-    expect(page).to have_css("img[src=\"#{pro_product.photo.url}\"]")
-    expect(page).to have_css("a[href=\"#{product_path(pro_product)}\"]")
+  it_behaves_like 'a user who can view all products' do
+    let(:user) { create(:admin) }
   end
 end
