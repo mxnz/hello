@@ -2,7 +2,7 @@ h1 = @product.name
 p
   = image_tag(@product.photo.url, alt: 'Product photo')
   = @product.description
-- if user_signed_in?
+- if policy(@product).update?
   div
     = link_to 'Edit product', edit_product_path(@product), class: 'btn btn-primary'
     | &nbsp
