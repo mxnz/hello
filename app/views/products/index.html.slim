@@ -5,4 +5,4 @@ div class="list-group"
     = link_to product_path(product), class: 'list-group-item' do
       = image_tag(product.photo.url, alt: "#{product.name} photo")
       = product.name
-= link_to('Add new product', new_product_path) if signed_in?
+= link_to('Add new product', new_product_path) if policy(Product).create?

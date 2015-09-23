@@ -3,16 +3,24 @@ require 'rails_helper'
 RSpec.feature 'Edit product', type: :feature do
 
   given(:product) { create(:product) }
-  before { sign_in(create(:user)) }
+  given(:owner) { create(:owner) }
+  given(:guest) { create(:guest) }
+  given(:admin) { create(:admin) }
 
-  scenario 'User can visit edit product page from show product page' do
+  it_behaves_like 'a page required authentication' do
+    let(:path_to_page) { edit_product_path(product) } 
+  end
+
+  scenario 'Store owner can visit edit product page from show product page' do
+    sign_in owner
     visit product_path(product)
     click_on 'Edit product'
 
     expect(current_path).to eq edit_product_path(product)
   end
 
-  scenario 'User edits the product with valid data' do
+  scenario 'Store owner edits the product with valid data' do
+    sign_in owner
     visit edit_product_path(product)
 
     fill_in 'Name', with: 'New name'
@@ -26,7 +34,8 @@ RSpec.feature 'Edit product', type: :feature do
     expect(page).to have_css("img[src$=\"ruby.jpeg\"]")
   end
 
-  scenario 'User tries to edit the product with invalid data' do
+  scenario 'Store owner cannot edit the product with invalid data' do
+    sign_in owner
     visit edit_product_path(product)
     fill_in 'Name', with: ''
     click_on 'Save'
@@ -39,7 +48,8 @@ RSpec.feature 'Edit product', type: :feature do
     expect(page).to have_button 'Save'  
   end
 
-  scenario 'User removes photo from the product' do
+  scenario 'Store owner removes photo from the product' do
+    sign_in owner
     visit edit_product_path(product)
     check 'Remove photo'
     click_on 'Save'
@@ -47,7 +57,8 @@ RSpec.feature 'Edit product', type: :feature do
     expect(page).to have_css("img[src=\"\"]")
   end
 
-  scenario 'User removes product' do
+  scenario 'Store owner removes product' do
+    sign_in owner
     visit product_path(product)
     click_on 'Remove product'
 
@@ -55,21 +66,76 @@ RSpec.feature 'Edit product', type: :feature do
     expect(page).to_not have_content product.name
   end
 
-  scenario 'Guest cannot remove product' do
-    log_out
+
+  scenario 'Unauthorized user cannot remove product' do
     visit product_path(product)
 
     expect(page).to_not have_selector(:link_or_button, 'Remove product')
   end
 
-  scenario 'Guest cannot visit edit produt page from show product page' do
-    log_out
+  scenario 'Unauthorized user cannot visit edit product page from show product page' do
     visit product_path(product)
 
     expect(page).to_not have_selector(:link_or_button, 'Edit product')
   end
 
-  it_behaves_like 'a page required authentication' do
-    let(:path_to_page) { edit_product_path(product) } 
+  scenario 'Unauthorized user cannot remove product page from show product page' do
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+
+  scenario 'Guest cannot remove product' do
+    sign_in guest
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+  scenario 'Guest cannot visit edit product page from show product page' do
+    sign_in guest
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Edit product')
+  end
+
+  scenario 'Guest cannot remove product from show product page' do
+    sign_in guest
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+  scenario 'Guest cannot visit edit product page' do
+    sign_in guest
+    expect { visit edit_product_path(product) }.to raise_error Pundit::NotAuthorizedError
+  end
+
+
+  scenario 'Admin cannot remove product' do
+    sign_in admin
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+  scenario 'Admin cannot visit edit product page from show product page' do
+    sign_in admin
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Edit product')
+  end
+
+  scenario 'Admin cannot remove product from show product page' do
+    sign_in admin
+    visit product_path(product)
+
+    expect(page).to_not have_selector(:link_or_button, 'Remove product')
+  end
+
+  scenario 'Admin cannot visit edit product page' do
+    sign_in admin
+    expect { visit edit_product_path(product) }.to raise_error Pundit::NotAuthorizedError
   end
 end
