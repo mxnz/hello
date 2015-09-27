@@ -63,4 +63,5 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include FeaturesMacros, type: :feature
   config.include Capybara::Email::DSL, type: :mailer
+  config.include Capybara::Email::DSL, type: :job
 end

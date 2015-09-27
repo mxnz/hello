@@ -10,9 +10,11 @@ class TestMarket
 
   def set_photo(photo)
     @photo = photo
+    self
   end
 
   def set_todo_id(id)
     @todo_id = id
+    self
   end
 end
