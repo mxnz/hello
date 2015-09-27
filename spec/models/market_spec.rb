@@ -8,11 +8,11 @@ RSpec.describe Market, type: :model, skip: 'skipped because it makes too slow re
     it 'returns photo' do
       photo = market.get_photo
 
-      expect(photo.album_id).to       be_present
-      expect(photo.id).to             be_present
-      expect(photo.title).to          be_present
-      expect(photo.url).to            be_present
-      expect(photo.thumbnail_url).to  be_present
+      expect(photo[:album_id]).to       be_present
+      expect(photo[:id]).to             be_present
+      expect(photo[:title]).to          be_present
+      expect(photo[:url]).to            be_present
+      expect(photo[:thumbnail_url]).to  be_present
     end
   end
 

@@ -11,7 +11,7 @@ RSpec.describe GuestMailer, type: :mailer do
     end
 
     it 'it sends email with photo url to given guest' do
-      expect(current_email).to have_link(photo.title, href: photo.url)
+      expect(current_email).to have_link(photo[:title], href: photo[:url])
     end
   end
 end
