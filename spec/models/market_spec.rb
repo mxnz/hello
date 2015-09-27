@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Market, type: :model, skip: true do
+RSpec.describe Market, type: :model, skip: 'skipped because it makes too slow remote request' do
   let(:market) { Market.new(photos_url: 'http://jsonplaceholder.typicode.com/photos',
                             todos_url:  'http://jsonplaceholder.typicode.com/todos') }
 
