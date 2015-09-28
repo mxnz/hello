@@ -1,0 +1,10 @@
+h1 New Order
+
+= form_for [@product, @order] do |f|
+  = render 'shared/error_messages', target: @order
+  h2 Product
+  p = @order.product.name
+
+  = f.submit 'Make an order', class: 'btn btn-success'
+  | &nbsp
+  = link_to 'Cancel', product_path(@order.product), class: 'btn btn-danger'
