@@ -16,7 +16,7 @@ class AdminTodoNotificationJob < ActiveJob::Base
       end
     else
       Admin.all.each do |admin|
-        AdminMailer.timeout_on_creating_todo_email(admin)
+        AdminMailer.timeout_on_creating_todo_email(admin).deliver_later
       end
     end
   end
