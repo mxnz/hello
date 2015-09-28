@@ -11,4 +11,8 @@ class AdminMailer < ApplicationMailer
     @guest = guest
     mail(to: admin.email, subject: 'Error on purchase')
   end
+
+  def timeout_on_creating_todo_email(admin)
+    mail(to: admin.email, subject: 'Timeout on creating todo')
+  end
 end

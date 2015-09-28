@@ -2,7 +2,8 @@ class CreateOrder
   include Interactor
 
   def call
-    photo = Rails.configuration.market.get_photo
+    photo = nil
+    Timeout::timeout(3) { photo = Rails.configuration.market.get_photo }
     color = photo[:url].split('/').last.to_i(16)
     thumbnail_color = photo[:thumbnail_url].split('/').last.to_i(16)
     context.order = Order.new(

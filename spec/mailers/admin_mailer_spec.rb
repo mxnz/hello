@@ -24,4 +24,14 @@ RSpec.describe AdminMailer, type: :mailer do
       expect(current_email).to have_content(guest.email)
     end
   end
+
+  describe ".timeout_on_creating_todo_email" do
+    before do
+      AdminMailer.timeout_on_creating_todo_email(admin).deliver_now
+      open_email(admin.email)
+    end
+    it 'sends email with about timeout to admin' do
+      expect(current_email).to have_content 'Timeout have been occured on creating todo request!'
+    end
+  end
 end

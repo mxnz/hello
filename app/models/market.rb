@@ -9,6 +9,7 @@ class Market
   end
 
   def get_photo
+    random_lag
     photos = JSON.parse(Net::HTTP.get(photos_uri))
     photo = photos[rand(0...photos.length)]
     {
@@ -21,6 +22,14 @@ class Market
   end
 
   def create_todo
+    random_lag
     todo_id = JSON.parse(Net::HTTP.post_form(todos_uri, {}).body)['id']
   end
+
+
+  private
+
+    def random_lag
+      sleep(rand 0..6)
+    end
 end
