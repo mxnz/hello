@@ -65,5 +65,6 @@ Rails.application.routes.draw do
     member do
       patch 'update_pro_attr'
     end
+    resources :orders, only: [:new, :create, :show], shallow: true
   end
 end

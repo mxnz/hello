@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe OrderPolicy, type: :policy, focus: true do
+RSpec.describe OrderPolicy, type: :policy do
   subject { described_class }
   let(:product) { create(:product) }
   let(:pro_product) { create(:product, pro: true) }
