@@ -5,8 +5,8 @@ class OrderPolicy < ApplicationPolicy
     end
   end
 
-  def show
-    false
+  def show?
+    record.user == user
   end
 
   def create?

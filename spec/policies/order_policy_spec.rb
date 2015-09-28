@@ -1,11 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe OrderPolicy, type: :policy do
+RSpec.describe OrderPolicy, type: :policy, focus: true do
   subject { described_class }
   let(:product) { create(:product) }
   let(:pro_product) { create(:product, pro: true) }
+  let(:order) { create(:order) }
 
   context 'for unknown user' do
+    permissions :show? do
+      it { is_expected.to_not permit(nil, order) }
+    end
+
     permissions :create? do
       it { is_expected.to_not permit(nil, Order) }
     end
@@ -13,6 +18,18 @@ RSpec.describe OrderPolicy, type: :policy do
 
   context 'for guest' do
     let(:guest) { create(:guest) }
+    let(:own_order) { create(:order, user: guest) }
+
+    permissions :show? do
+      context 'for own order' do
+        it { is_expected.to permit(guest, own_order) } 
+      end
+
+      context "for another's order" do
+        it { is_expected.to_not permit(guest, order) }
+      end
+    end
+
     permissions :create? do
       context 'when product is pro' do
         it { is_expected.to_not permit(guest, Order.new(product: pro_product))  }
@@ -37,6 +54,11 @@ RSpec.describe OrderPolicy, type: :policy do
 
   context 'for store owner' do
     let(:owner) { create(:owner) }
+
+    permissions :show? do
+      it { is_expected.to_not permit(owner, order) }
+    end
+
     permissions :create? do
       it { is_expected.to_not permit(owner, Order) }
     end
@@ -44,6 +66,11 @@ RSpec.describe OrderPolicy, type: :policy do
 
   context 'for admin' do
     let(:admin) { create(:admin) }
+
+    permissions :show? do
+      it { is_expected.to_not permit(admin, order) }
+    end
+
     permissions :create? do
       it { is_expected.to_not permit(admin, Order) }
     end
