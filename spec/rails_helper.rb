@@ -67,4 +67,18 @@ RSpec.configure do |config|
   config.include Capybara::Email::DSL, type: :mailer
   config.include Capybara::Email::DSL, type: :job
   config.include Capybara::Email::DSL, type: :interactor
+
+  config.after(:all) do
+    # Get rid of the linked images
+    if Rails.env.test? || Rails.env.cucumber?
+      FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/admin/[^.]*"])
+      FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/owner/[^.]*"])
+      FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/product/[^.]*"])
+      FileUtils.rm_rf(Dir["#{Rails.root}/public/uploads/tmp/[^.]*"])
+      
+      # if you want to delete everything under the CarrierWave root that you set in an initializer,
+      # you can do this:
+      # FileUtils.rm_rf(CarrierWave::Uploader::Base.root)
+    end
+  end
 end
