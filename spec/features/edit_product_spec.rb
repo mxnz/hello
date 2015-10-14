@@ -41,7 +41,6 @@ RSpec.feature 'Edit product', type: :feature do
     click_on 'Save'
 
     expect(page).to have_content "Name can't be blank"
-
     expect(page).to have_field 'Name'
     expect(page).to have_field 'Description'
     expect(page).to have_field 'Photo', type: 'file'
@@ -109,7 +108,7 @@ RSpec.feature 'Edit product', type: :feature do
 
   scenario 'Guest cannot visit edit product page' do
     sign_in guest
-    expect { visit edit_product_path(product) }.to raise_error Pundit::NotAuthorizedError
+    expect { visit edit_product_path(product) }.to raise_error Trailblazer::NotAuthorizedError
   end
 
 
@@ -136,6 +135,6 @@ RSpec.feature 'Edit product', type: :feature do
 
   scenario 'Admin cannot visit edit product page' do
     sign_in admin
-    expect { visit edit_product_path(product) }.to raise_error Pundit::NotAuthorizedError
+    expect { visit edit_product_path(product) }.to raise_error Trailblazer::NotAuthorizedError
   end
 end

@@ -55,7 +55,7 @@ RSpec.feature 'Create product', type: :feature do
 
   scenario 'A guest cannot add a new product' do
     sign_in guest
-    expect { visit new_product_path }.to raise_error Pundit::NotAuthorizedError
+    expect { visit new_product_path }.to raise_error Trailblazer::NotAuthorizedError
   end
 
 
@@ -68,6 +68,6 @@ RSpec.feature 'Create product', type: :feature do
 
   scenario 'An admin cannot add a new product' do
     sign_in admin
-    expect { visit new_product_path }.to raise_error Pundit::NotAuthorizedError
+    expect { visit new_product_path }.to raise_error Trailblazer::NotAuthorizedError
   end
 end

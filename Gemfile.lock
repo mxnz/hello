@@ -64,6 +64,9 @@ GEM
       activesupport (>= 3.2.0)
       json (>= 1.7)
       mime-types (>= 1.16)
+    cells (4.0.2)
+      tilt (>= 1.4, < 3)
+      uber (~> 0.0.9)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -82,6 +85,9 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
+    disposable (0.1.13)
+      representable (>= 2.2.3, < 3.0.0)
+      uber
     erubis (2.7.0)
     execjs (2.6.0)
     factory_girl (4.5.0)
@@ -162,6 +168,11 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    reform (2.0.5)
+      disposable (~> 0.1.11)
+      uber (~> 0.0.11)
+    representable (2.3.0)
+      uber (~> 0.0.7)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
     rspec-core (3.3.2)
@@ -214,10 +225,16 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
+    trailblazer (1.0.3)
+      reform (>= 1.2.0)
+      uber (>= 0.0.15)
+    trailblazer-rails (0.1.5)
+      trailblazer (>= 1.0.2)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uber (0.0.15)
     uglifier (2.7.2)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -241,6 +258,7 @@ DEPENDENCIES
   capybara
   capybara-email
   carrierwave
+  cells
   coffee-rails (~> 4.1.0)
   devise
   factory_girl_rails
@@ -261,6 +279,8 @@ DEPENDENCIES
   shoulda-matchers
   slim-rails
   spring
+  trailblazer
+  trailblazer-rails
   turbolinks
   uglifier (>= 1.3.0)
   web-console (~> 2.0)

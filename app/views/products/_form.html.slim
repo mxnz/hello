@@ -1,5 +1,5 @@
-= form_for @product do |f|
-  = render 'shared/error_messages', target: @product
+= form_for @form do |f|
+  = render 'shared/error_messages', target: @form
   = f.label :name
   = f.text_field :name, class: 'form-control'
   br
@@ -12,7 +12,7 @@
   = f.file_field :photo
   br
 
-  - if @product.photo.file.present?
+  - if @form.photo.file.present?
     div class="checkbox"
       = label_tag do
         = f.check_box :remove_photo
@@ -22,6 +22,5 @@
   br
   = f.submit 'Save', class: 'btn btn-success'
   | &nbsp
-  - cancel_path = @product.persisted? ? product_path(@product) : products_path
+  - cancel_path = @form.persisted? ? product_path(@form) : products_path
   = link_to 'Cancel', cancel_path, class: 'btn btn-danger'
-

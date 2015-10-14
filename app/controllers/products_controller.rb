@@ -1,6 +1,5 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_product, ->() { authorize @product }, only: [:show, :edit, :update, :destroy, :update_pro_attr]
 
   def index
     @products = policy_scope(Product.all)
@@ -8,46 +7,32 @@ class ProductsController < ApplicationController
   end
 
   def new
-    @product = Product.new
-    authorize @product
-    respond_with(@product = Product.new)
+    form Product::Create
   end
 
   def create
-    authorize Product
-    @product = Product.create(product_params.merge(store: current_user.store))
-    respond_with(@product)
+    respond Product::Create
   end
 
   def show
-    respond_with(@product)
+    present Product::Show
   end
 
   def edit
-    respond_with(@product)
+    form Product::Update
   end
 
   def update
-    @product.update(product_params)
-    respond_with(@product)
+    respond Product::Update
   end
 
   def destroy
-    respond_with(@product.destroy!)
+    run Product::Destroy
+    redirect_to products_path
   end
 
   def update_pro_attr
-    @product.update(pro: !@product.pro?)
+    run Product::UpdateProAttr
     render :show
   end
-
-  private
-
-    def load_product
-      @product = Product.find(params[:id])
-    end
-
-    def product_params
-      params.require(:product).permit(:name, :description, :photo, :remove_photo)
-    end
 end
